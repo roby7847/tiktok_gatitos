@@ -18,9 +18,8 @@ let attempts = 0;
 let progress = 0;
 let finished = false;
 
-// ===============================
+
 // RELOJ
-// ===============================
 function updateClock() {
     const now = new Date();
 
@@ -35,9 +34,7 @@ setInterval(updateClock, 1000);
 updateClock();
 
 
-// ===============================
-// PROCESOS DEL SISTEMA
-// ===============================
+// PROCESOS
 const processes = [
     "INITIALIZING SYSTEM...",
     "SCANNING NETWORK...",
@@ -68,9 +65,7 @@ setInterval(() => {
 }, 800);
 
 
-// ===============================
 // BARRA DE PROGRESO
-// ===============================
 const progressInterval = setInterval(() => {
 
     if (finished) return;
@@ -92,9 +87,7 @@ const progressInterval = setInterval(() => {
 }, 180);
 
 
-// ===============================
-// TEXTO BINARIO
-// ===============================
+// BINARIO
 function randomBinary(length = 32) {
 
     let result = "";
@@ -131,9 +124,7 @@ function createBinary() {
 setInterval(createBinary, 300);
 
 
-// ===============================
 // TERMINALES FALSAS
-// ===============================
 const commands = [
     "sudo scan --network",
     "checking ports...",
@@ -166,11 +157,8 @@ function createTerminal() {
         </div>
     `;
 
-    terminal.style.left =
-        Math.random() * 65 + "%";
-
-    terminal.style.top =
-        Math.random() * 65 + 15 + "%";
+    terminal.style.left = Math.random() * 65 + "%";
+    terminal.style.top = Math.random() * 65 + 15 + "%";
 
     terminalLayer.appendChild(terminal);
 
@@ -194,17 +182,18 @@ function createTerminal() {
     }, 230);
 
     setTimeout(() => {
+
         terminal.remove();
+
         clearInterval(terminalInterval);
+
     }, 6500);
 }
 
 setInterval(createTerminal, 1100);
 
 
-// ===============================
-// ALERTAS FALSAS
-// ===============================
+// ALERTAS
 const alerts = [
     "UNAUTHORIZED SESSION DETECTED",
     "REMOTE CONNECTION ESTABLISHED",
@@ -244,11 +233,8 @@ function createAlert() {
         </div>
     `;
 
-    alert.style.left =
-        Math.random() * 65 + 10 + "%";
-
-    alert.style.top =
-        Math.random() * 60 + 15 + "%";
+    alert.style.left = Math.random() * 65 + 10 + "%";
+    alert.style.top = Math.random() * 60 + 15 + "%";
 
     alertLayer.appendChild(alert);
 
@@ -260,9 +246,7 @@ function createAlert() {
 setInterval(createAlert, 900);
 
 
-// ===============================
 // MENSAJES CENTRALES
-// ===============================
 const messages = [
     "SYSTEM ACCESS DETECTED",
     "REMOTE SESSION ACTIVE",
@@ -290,9 +274,7 @@ setInterval(() => {
 }, 5000);
 
 
-// ===============================
-// BOTÓN QUE SE MUEVE
-// ===============================
+// BOTÓN
 function moveButton() {
 
     const maxX =
@@ -335,7 +317,8 @@ stopButton.addEventListener("click", () => {
         stopButton.style.left = "50%";
         stopButton.style.top = "auto";
         stopButton.style.bottom = "30px";
-        stopButton.style.transform = "translateX(-50%)";
+        stopButton.style.transform =
+            "translateX(-50%)";
 
         stopButton.textContent =
             "TERMINATE SESSION";
@@ -345,9 +328,7 @@ stopButton.addEventListener("click", () => {
 });
 
 
-// ===============================
 // PANTALLA FINAL
-// ===============================
 function finishSimulation() {
 
     if (finished) return;
@@ -358,30 +339,29 @@ function finishSimulation() {
 
     stopButton.style.display = "none";
 
-    const logs = finalMessage.querySelector(".final-logs");
+    const logs =
+        finalMessage.querySelector(".final-logs");
 
     if (logs) {
 
         logs.innerHTML = `
-            > REMOTE SESSION ESTABLISHED<br>
-            > SECURITY BYPASS: SUCCESS<br>
-            > SYSTEM ACCESS: GRANTED<br>
-            > LOCAL RESOURCES: DETECTED<br>
-            > SESSION STATUS: ACTIVE<br>
-            > SECURITY STATUS: COMPROMISED<br>
-            > CONNECTION: STABLE
+            &gt; REMOTE SESSION ESTABLISHED<br>
+            &gt; SECURITY BYPASS: SUCCESS<br>
+            &gt; SYSTEM ACCESS: GRANTED<br>
+            &gt; LOCAL RESOURCES: DETECTED<br>
+            &gt; SESSION STATUS: ACTIVE<br>
+            &gt; SECURITY STATUS: COMPROMISED<br>
+            &gt; CONNECTION: STABLE
         `;
     }
 }
 
 
-// ===============================
-// APARECER "HAS SIDO HACKEADO"
-// DESPUÉS DE 4 SEGUNDOS
-// ===============================
+// FINAL: 6.5 SEGUNDOS
 setTimeout(() => {
 
     finishSimulation();
 
 }, 6500);
+```
 
