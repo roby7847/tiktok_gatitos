@@ -923,4 +923,4 @@ setTimeout(() => {
 
     finishSimulation();
 
-}, 5000);
+}, 500);
