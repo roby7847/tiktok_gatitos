@@ -20,21 +20,26 @@ let finished = false;
 
 
 // RELOJ
+
 function updateClock() {
+
     const now = new Date();
 
-    clock.textContent = now.toLocaleTimeString("es-MX", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-    });
+    clock.textContent =
+        now.toLocaleTimeString("es-MX", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
 }
 
 setInterval(updateClock, 1000);
+
 updateClock();
 
 
 // PROCESOS
+
 const processes = [
     "INITIALIZING SYSTEM...",
     "SCANNING NETWORK...",
@@ -54,7 +59,8 @@ setInterval(() => {
 
     if (finished) return;
 
-    processText.textContent = processes[processIndex];
+    processText.textContent =
+        processes[processIndex];
 
     processIndex++;
 
@@ -65,66 +71,90 @@ setInterval(() => {
 }, 800);
 
 
-// BARRA DE PROGRESO
+// PROGRESO
+
 const progressInterval = setInterval(() => {
 
     if (finished) return;
 
-    progress += Math.floor(Math.random() * 7) + 1;
+    progress +=
+        Math.floor(Math.random() * 7) + 1;
 
     if (progress >= 100) {
+
         progress = 100;
 
         clearInterval(progressInterval);
 
-        statusText.textContent = "ANOMALY DETECTED";
-        statusText.style.color = "#b45c5c";
+        statusText.textContent =
+            "ANOMALY DETECTED";
+
+        statusText.style.color =
+            "#b45c5c";
     }
 
-    progressBar.style.width = progress + "%";
-    percentage.textContent = progress + "%";
+    progressBar.style.width =
+        progress + "%";
+
+    percentage.textContent =
+        progress + "%";
 
 }, 180);
 
 
 // BINARIO
+
 function randomBinary(length = 32) {
 
     let result = "";
 
     for (let i = 0; i < length; i++) {
-        result += Math.random() > 0.5 ? "1" : "0";
+
+        result +=
+            Math.random() > 0.5
+                ? "1"
+                : "0";
     }
 
     return result;
 }
 
+
 function createBinary() {
 
     if (finished) return;
 
-    const binary = document.createElement("div");
+    const binary =
+        document.createElement("div");
 
     binary.className = "binary";
 
-    binary.textContent = randomBinary(
-        Math.floor(Math.random() * 30) + 15
-    );
+    binary.textContent =
+        randomBinary(
+            Math.floor(Math.random() * 30) + 15
+        );
 
-    binary.style.left = Math.random() * 100 + "%";
-    binary.style.top = Math.random() * 100 + "%";
+    binary.style.left =
+        Math.random() * 100 + "%";
+
+    binary.style.top =
+        Math.random() * 100 + "%";
 
     binaryLayer.appendChild(binary);
 
     setTimeout(() => {
+
         binary.remove();
+
     }, 5000);
 }
+
 
 setInterval(createBinary, 300);
 
 
-// TERMINALES FALSAS
+// TERMINALES
+
 const commands = [
     "sudo scan --network",
     "checking ports...",
@@ -139,13 +169,16 @@ const commands = [
     "connection stable"
 ];
 
+
 function createTerminal() {
 
     if (finished) return;
 
-    const terminal = document.createElement("div");
+    const terminal =
+        document.createElement("div");
 
-    terminal.className = "fake-terminal";
+    terminal.className =
+        "fake-terminal";
 
     terminal.innerHTML = `
         <div class="terminal-header">
@@ -157,44 +190,62 @@ function createTerminal() {
         </div>
     `;
 
-    terminal.style.left = Math.random() * 65 + "%";
-    terminal.style.top = Math.random() * 65 + 15 + "%";
+    terminal.style.left =
+        Math.random() * 65 + "%";
+
+    terminal.style.top =
+        Math.random() * 65 + 15 + "%";
 
     terminalLayer.appendChild(terminal);
 
     const output =
-        terminal.querySelector(".terminal-output");
+        terminal.querySelector(
+            ".terminal-output"
+        );
 
     let index = 0;
 
-    const terminalInterval = setInterval(() => {
+    const terminalInterval =
+        setInterval(() => {
 
-        if (index >= commands.length) {
-            clearInterval(terminalInterval);
-            return;
-        }
+            if (index >= commands.length) {
 
-        output.innerHTML +=
-            "> " + commands[index] + "<br>";
+                clearInterval(
+                    terminalInterval
+                );
 
-        index++;
+                return;
+            }
 
-    }, 230);
+            output.innerHTML +=
+                "> " +
+                commands[index] +
+                "<br>";
+
+            index++;
+
+        }, 230);
+
 
     setTimeout(() => {
 
         terminal.remove();
 
-        clearInterval(terminalInterval);
+        clearInterval(
+            terminalInterval
+        );
 
     }, 6500);
 }
+
 
 setInterval(createTerminal, 1100);
 
 
 // ALERTAS
+
 const alerts = [
+
     "UNAUTHORIZED SESSION DETECTED",
     "REMOTE CONNECTION ESTABLISHED",
     "SYSTEM RESPONSE RECEIVED",
@@ -210,18 +261,27 @@ const alerts = [
     "UNAUTHORIZED ACCESS",
     "REMOTE SESSION CREATED",
     "SYSTEM COMPROMISED"
+
 ];
+
 
 function createAlert() {
 
     if (finished) return;
 
-    const alert = document.createElement("div");
+    const alert =
+        document.createElement("div");
 
-    alert.className = "security-alert";
+    alert.className =
+        "security-alert";
 
     const randomAlert =
-        alerts[Math.floor(Math.random() * alerts.length)];
+        alerts[
+            Math.floor(
+                Math.random() *
+                alerts.length
+            )
+        ];
 
     alert.innerHTML = `
         <div class="alert-header">
@@ -233,30 +293,40 @@ function createAlert() {
         </div>
     `;
 
-    alert.style.left = Math.random() * 65 + 10 + "%";
-    alert.style.top = Math.random() * 60 + 15 + "%";
+    alert.style.left =
+        Math.random() * 65 + 10 + "%";
+
+    alert.style.top =
+        Math.random() * 60 + 15 + "%";
 
     alertLayer.appendChild(alert);
 
     setTimeout(() => {
+
         alert.remove();
+
     }, 4500);
 }
+
 
 setInterval(createAlert, 900);
 
 
 // MENSAJES CENTRALES
+
 const messages = [
+
     "SYSTEM ACCESS DETECTED",
     "REMOTE SESSION ACTIVE",
     "SECURITY BYPASS",
     "UNAUTHORIZED ACCESS",
     "SYSTEM COMPROMISED",
     "TE ESTOY HACKEANDO"
+
 ];
 
 let messageIndex = 0;
+
 
 setInterval(() => {
 
@@ -275,6 +345,7 @@ setInterval(() => {
 
 
 // BOTÓN
+
 function moveButton() {
 
     const maxX =
@@ -288,59 +359,88 @@ function moveButton() {
         20;
 
     const x =
-        Math.random() * Math.max(maxX, 20);
+        Math.random() *
+        Math.max(maxX, 20);
 
     const y =
-        Math.random() * Math.max(maxY, 20);
+        Math.random() *
+        Math.max(maxY, 20);
 
-    stopButton.style.left = x + "px";
-    stopButton.style.top = y + "px";
+    stopButton.style.left =
+        x + "px";
+
+    stopButton.style.top =
+        y + "px";
 }
 
-stopButton.addEventListener("click", () => {
 
-    if (finished) return;
+stopButton.addEventListener(
+    "click",
+    () => {
 
-    attempts++;
+        if (finished) return;
 
-    attemptsDisplay.textContent = attempts;
+        attempts++;
 
-    if (attempts < 10) {
+        attemptsDisplay.textContent =
+            attempts;
 
-        stopButton.textContent =
-            "TERMINATE SESSION";
 
-        moveButton();
+        if (attempts < 10) {
 
-    } else {
+            stopButton.textContent =
+                "TERMINATE SESSION";
 
-        stopButton.style.left = "50%";
-        stopButton.style.top = "auto";
-        stopButton.style.bottom = "30px";
-        stopButton.style.transform =
-            "translateX(-50%)";
+            moveButton();
 
-        stopButton.textContent =
-            "TERMINATE SESSION";
+        }
 
-        stopButton.onclick = finishSimulation;
+        else {
+
+            stopButton.style.left =
+                "50%";
+
+            stopButton.style.top =
+                "auto";
+
+            stopButton.style.bottom =
+                "30px";
+
+            stopButton.style.transform =
+                "translateX(-50%)";
+
+            stopButton.textContent =
+                "TERMINATE SESSION";
+
+            stopButton.onclick =
+                finishSimulation;
+        }
+
     }
-});
+);
 
 
 // PANTALLA FINAL
+
 function finishSimulation() {
 
     if (finished) return;
 
     finished = true;
 
-    finalMessage.classList.remove("hidden");
+    finalMessage.classList.remove(
+        "hidden"
+    );
 
-    stopButton.style.display = "none";
+    stopButton.style.display =
+        "none";
+
 
     const logs =
-        finalMessage.querySelector(".final-logs");
+        finalMessage.querySelector(
+            ".final-logs"
+        );
+
 
     if (logs) {
 
@@ -357,11 +457,14 @@ function finishSimulation() {
 }
 
 
-// FINAL: 6.5 SEGUNDOS
+// =====================================
+// APARECE "HAS SIDO HACKEADO"
+// DESPUÉS DE 4.5 SEGUNDOS
+// =====================================
+
 setTimeout(() => {
 
     finishSimulation();
 
-}, 4000);
+}, 4500);
 ```
-
