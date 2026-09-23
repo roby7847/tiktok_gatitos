@@ -362,6 +362,6 @@ setTimeout(() => {
 
     finishSimulation();
 
-}, 6500);
+}, 5500);
 ```
 
