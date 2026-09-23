@@ -1,926 +1,387 @@
-const app =
-    document.getElementById("app");
+```javascript
+const clock = document.getElementById("clock");
+const processText = document.getElementById("processText");
+const statusText = document.getElementById("statusText");
+const progressBar = document.getElementById("progressBar");
+const percentage = document.getElementById("percentage");
 
-const terminalLayer =
-    document.getElementById("terminalLayer");
+const terminalLayer = document.getElementById("terminalLayer");
+const binaryLayer = document.getElementById("binaryLayer");
+const alertLayer = document.getElementById("alertLayer");
+const intrusionMessage = document.getElementById("intrusionMessage");
 
-const binaryLayer =
-    document.getElementById("binaryLayer");
-
-const alertLayer =
-    document.getElementById("alertLayer");
-
-const stopButton =
-    document.getElementById("stopButton");
-
-const attemptsElement =
-    document.getElementById("attempts");
-
-const finalMessage =
-    document.getElementById("finalMessage");
-
-const progressBar =
-    document.getElementById("progressBar");
-
-const percentage =
-    document.getElementById("percentage");
-
-const processText =
-    document.getElementById("processText");
-
-const statusText =
-    document.getElementById("statusText");
-
-const intrusionMessage =
-    document.getElementById("intrusionMessage");
-
+const stopButton = document.getElementById("stopButton");
+const attemptsDisplay = document.getElementById("attempts");
+const finalMessage = document.getElementById("finalMessage");
 
 let attempts = 0;
-
 let progress = 0;
-
 let finished = false;
 
-
-/* =================================
-   RELOJ
-================================= */
-
+// ===============================
+// RELOJ
+// ===============================
 function updateClock() {
-
     const now = new Date();
 
-    document.getElementById("clock")
-        .textContent =
-        now.toLocaleTimeString(
-            "es-MX",
-            {
-                hour12: false
-            }
-        );
-
+    clock.textContent = now.toLocaleTimeString("es-MX", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
 }
 
-
-setInterval(
-    updateClock,
-    1000
-);
-
+setInterval(updateClock, 1000);
 updateClock();
 
 
-/* =================================
-   PROCESOS
-================================= */
-
+// ===============================
+// PROCESOS DEL SISTEMA
+// ===============================
 const processes = [
-
-    "INITIALIZING",
-
-    "SCANNING",
-
-    "ANALYZING",
-
-    "CHECKING SERVICES",
-
-    "ENUMERATING",
-
-    "VERIFYING",
-
-    "PROCESSING",
-
-    "EXTRACTING",
-
-    "ESTABLISHING SESSION",
-
-    "REMOTE ACCESS"
-
+    "INITIALIZING SYSTEM...",
+    "SCANNING NETWORK...",
+    "ANALYZING SERVICES...",
+    "CHECKING SECURITY...",
+    "ENUMERATING PORTS...",
+    "VERIFYING CONNECTION...",
+    "PROCESSING REQUEST...",
+    "EXTRACTING DATA...",
+    "ESTABLISHING SESSION...",
+    "REMOTE ACCESS..."
 ];
-
 
 let processIndex = 0;
 
-
 setInterval(() => {
 
-    if (finished) {
-        return;
-    }
+    if (finished) return;
+
+    processText.textContent = processes[processIndex];
 
     processIndex++;
 
-    if (
-        processIndex >=
-        processes.length
-    ) {
-
+    if (processIndex >= processes.length) {
         processIndex = 0;
-
     }
-
-    processText.textContent =
-        processes[processIndex];
 
 }, 800);
 
 
-/* =================================
-   BARRA
-================================= */
+// ===============================
+// BARRA DE PROGRESO
+// ===============================
+const progressInterval = setInterval(() => {
 
-setInterval(() => {
+    if (finished) return;
 
-    if (finished) {
-        return;
-    }
-
-    progress +=
-        Math.random() * 3;
-
+    progress += Math.floor(Math.random() * 7) + 1;
 
     if (progress >= 100) {
-
         progress = 100;
 
-        statusText.textContent =
-            "ANOMALY DETECTED";
+        clearInterval(progressInterval);
 
-        statusText.style.color =
-            "#a16b6b";
-
+        statusText.textContent = "ANOMALY DETECTED";
+        statusText.style.color = "#b45c5c";
     }
 
-
-    progressBar.style.width =
-        progress + "%";
-
-
-    percentage.textContent =
-        Math.floor(progress);
+    progressBar.style.width = progress + "%";
+    percentage.textContent = progress + "%";
 
 }, 180);
 
 
-/* =================================
-   BINARIO
-================================= */
-
-function randomBinary(length) {
+// ===============================
+// TEXTO BINARIO
+// ===============================
+function randomBinary(length = 32) {
 
     let result = "";
 
-    for (
-        let i = 0;
-        i < length;
-        i++
-    ) {
-
-        result +=
-            Math.random() > .5
-                ? "1"
-                : "0";
-
+    for (let i = 0; i < length; i++) {
+        result += Math.random() > 0.5 ? "1" : "0";
     }
 
     return result;
-
 }
-
 
 function createBinary() {
 
-    if (finished) {
-        return;
-    }
+    if (finished) return;
 
+    const binary = document.createElement("div");
 
-    const element =
-        document.createElement("div");
+    binary.className = "binary";
 
-
-    element.className =
-        "binary";
-
-
-    element.textContent =
-        randomBinary(
-            30 +
-            Math.floor(
-                Math.random() * 70
-            )
-        );
-
-
-    element.style.left =
-        Math.random() * 95 + "%";
-
-
-    element.style.top =
-        Math.random() * 100 + "%";
-
-
-    binaryLayer.appendChild(
-        element
+    binary.textContent = randomBinary(
+        Math.floor(Math.random() * 30) + 15
     );
 
+    binary.style.left = Math.random() * 100 + "%";
+    binary.style.top = Math.random() * 100 + "%";
+
+    binaryLayer.appendChild(binary);
 
     setTimeout(() => {
-
-        element.remove();
-
+        binary.remove();
     }, 5000);
-
 }
 
-
-setInterval(
-    createBinary,
-    300
-);
+setInterval(createBinary, 300);
 
 
-/* =================================
-   TERMINALES
-================================= */
-
-const terminalCommands = [
-
-    "initializing process...",
-
-    "checking connection...",
-
+// ===============================
+// TERMINALES FALSAS
+// ===============================
+const commands = [
+    "sudo scan --network",
+    "checking ports...",
     "connection established",
-
-    "enumerating services...",
-
-    "checking active sessions...",
-
-    "analyzing response...",
-
-    "request accepted",
-
-    "session created",
-
-    "processing data...",
-
-    "verification bypassed",
-
-    "access granted",
-
-    "writing response...",
-
-    "operation complete",
-
-    "remote session active"
-
+    "remote session detected",
+    "reading system information",
+    "analyzing processes",
+    "security bypass attempt",
+    "access request accepted",
+    "extracting system data",
+    "remote process active",
+    "connection stable"
 ];
-
 
 function createTerminal() {
 
-    if (finished) {
-        return;
-    }
+    if (finished) return;
 
+    const terminal = document.createElement("div");
 
-    const terminal =
-        document.createElement("div");
-
-
-    terminal.className =
-        "terminal";
-
-
-    const maxX =
-        Math.max(
-            5,
-            window.innerWidth - 280
-        );
-
-
-    const maxY =
-        Math.max(
-            100,
-            window.innerHeight - 200
-        );
-
-
-    terminal.style.left =
-        Math.random() *
-        maxX +
-        "px";
-
-
-    terminal.style.top =
-        50 +
-        Math.random() *
-        (maxY - 50) +
-        "px";
-
+    terminal.className = "fake-terminal";
 
     terminal.innerHTML = `
-
         <div class="terminal-header">
-
-            terminal —
-            session_${Math.floor(
-                Math.random() * 9999
-            )}
-
+            SYSTEM TERMINAL
         </div>
 
-
-        <div class="terminal-content">
-
+        <div class="terminal-body">
+            <span class="terminal-output"></span>
         </div>
-
     `;
 
+    terminal.style.left =
+        Math.random() * 65 + "%";
 
-    terminalLayer.appendChild(
-        terminal
-    );
+    terminal.style.top =
+        Math.random() * 65 + 15 + "%";
 
+    terminalLayer.appendChild(terminal);
 
-    const content =
-        terminal.querySelector(
-            ".terminal-content"
-        );
+    const output =
+        terminal.querySelector(".terminal-output");
 
+    let index = 0;
 
-    let lineIndex = 0;
+    const terminalInterval = setInterval(() => {
 
+        if (index >= commands.length) {
+            clearInterval(terminalInterval);
+            return;
+        }
 
-    const interval =
-        setInterval(() => {
+        output.innerHTML +=
+            "> " + commands[index] + "<br>";
 
-            if (
-                !terminal.parentElement ||
-                finished
-            ) {
+        index++;
 
-                clearInterval(interval);
-
-                return;
-
-            }
-
-
-            const line =
-                document.createElement(
-                    "div"
-                );
-
-
-            if (
-                Math.random() < .22
-            ) {
-
-                line.className =
-                    "danger";
-
-
-                line.textContent =
-                    "WARNING: " +
-                    randomBinary(18);
-
-            }
-
-            else {
-
-                line.textContent =
-                    terminalCommands[
-                        lineIndex %
-                        terminalCommands.length
-                    ];
-
-            }
-
-
-            content.appendChild(
-                line
-            );
-
-
-            if (
-                content.children.length > 9
-            ) {
-
-                content.removeChild(
-                    content.firstChild
-                );
-
-            }
-
-
-            lineIndex++;
-
-
-        }, 230);
-
+    }, 230);
 
     setTimeout(() => {
-
-        clearInterval(interval);
-
         terminal.remove();
-
+        clearInterval(terminalInterval);
     }, 6500);
-
 }
 
-
-setInterval(() => {
-
-    createTerminal();
+setInterval(createTerminal, 1100);
 
 
-    if (
-        Math.random() < .45
-    ) {
-
-        setTimeout(
-            createTerminal,
-            300
-        );
-
-    }
-
-}, 1100);
-
-
-/* =================================
-   ALERTAS
-================================= */
-
+// ===============================
+// ALERTAS FALSAS
+// ===============================
 const alerts = [
-
     "UNAUTHORIZED SESSION DETECTED",
-
     "REMOTE CONNECTION ESTABLISHED",
-
     "SYSTEM RESPONSE RECEIVED",
-
     "SECURITY CHECK FAILED",
-
     "DATA PROCESS RUNNING",
-
     "ACTIVE SESSION DETECTED",
-
     "ACCESS REQUEST ACCEPTED",
-
     "SYSTEM INTEGRITY WARNING",
-
     "REMOTE PROCESS ACTIVE",
-
     "TE ESTOY HACKEANDO",
-
     "ANALYZING LOCAL RESOURCES",
-
     "SECURITY BYPASS DETECTED",
-
     "UNAUTHORIZED ACCESS",
-
     "REMOTE SESSION CREATED",
-
     "SYSTEM COMPROMISED"
-
 ];
-
 
 function createAlert() {
 
-    if (finished) {
-        return;
-    }
+    if (finished) return;
 
+    const alert = document.createElement("div");
 
-    const alert =
-        document.createElement("div");
+    alert.className = "security-alert";
 
-
-    alert.className =
-        "alert";
-
-
-    const message =
-        alerts[
-            Math.floor(
-                Math.random() *
-                alerts.length
-            )
-        ];
-
+    const randomAlert =
+        alerts[Math.floor(Math.random() * alerts.length)];
 
     alert.innerHTML = `
-
         <div class="alert-header">
-
-            SECURITY EVENT
-
+            SECURITY WARNING
         </div>
-
 
         <div class="alert-body">
-
-            <strong>
-
-                ${message}
-
-            </strong>
-
-            <br><br>
-
-            Event ID:
-
-            ${Math.floor(
-                Math.random() * 999999
-            )}
-
-            <br>
-
-            Status:
-            processing
-
-            <br>
-
-
-            <button class="alert-button">
-
-                CLOSE
-
-            </button>
-
+            ${randomAlert}
         </div>
-
     `;
 
-
-    const maxX =
-        Math.max(
-            5,
-            window.innerWidth - 255
-        );
-
-
-    const maxY =
-        Math.max(
-            80,
-            window.innerHeight - 230
-        );
-
-
     alert.style.left =
-        Math.random() *
-        maxX +
-        "px";
-
+        Math.random() * 65 + 10 + "%";
 
     alert.style.top =
-        50 +
-        Math.random() *
-        (maxY - 50) +
-        "px";
+        Math.random() * 60 + 15 + "%";
 
-
-    alertLayer.appendChild(
-        alert
-    );
-
-
-    alert.querySelector(
-        ".alert-button"
-    ).addEventListener(
-        "click",
-        () => alert.remove()
-    );
-
+    alertLayer.appendChild(alert);
 
     setTimeout(() => {
-
-        if (
-            alert.parentElement
-        ) {
-
-            alert.remove();
-
-        }
-
+        alert.remove();
     }, 4500);
-
 }
 
+setInterval(createAlert, 900);
+
+
+// ===============================
+// MENSAJES CENTRALES
+// ===============================
+const messages = [
+    "SYSTEM ACCESS DETECTED",
+    "REMOTE SESSION ACTIVE",
+    "SECURITY BYPASS",
+    "UNAUTHORIZED ACCESS",
+    "SYSTEM COMPROMISED",
+    "TE ESTOY HACKEANDO"
+];
+
+let messageIndex = 0;
 
 setInterval(() => {
 
-    createAlert();
-
-
-    if (
-        Math.random() < .35
-    ) {
-
-        createAlert();
-
-    }
-
-}, 900);
-
-
-/* =================================
-   MENSAJES CENTRALES
-================================= */
-
-const centralMessages = [
-
-    "SYSTEM ACCESS DETECTED",
-
-    "REMOTE SESSION ACTIVE",
-
-    "SECURITY BYPASS",
-
-    "UNAUTHORIZED ACCESS",
-
-    "SYSTEM COMPROMISED",
-
-    "TE ESTOY HACKEANDO"
-
-];
-
-
-function showCentralMessage() {
-
-    if (finished) {
-        return;
-    }
-
+    if (finished) return;
 
     intrusionMessage.textContent =
-        centralMessages[
-            Math.floor(
-                Math.random() *
-                centralMessages.length
-            )
-        ];
+        messages[messageIndex];
 
+    messageIndex++;
 
-    intrusionMessage.style.opacity =
-        "1";
-
-
-    setTimeout(() => {
-
-        intrusionMessage.style.opacity =
-            "0";
-
-    }, 850);
-
-}
-
-
-setInterval(
-    showCentralMessage,
-    5000
-);
-
-
-/* =================================
-   BOTÓN ESCAPADIZO
-================================= */
-
-stopButton.addEventListener(
-    "click",
-    handleStop
-);
-
-
-function handleStop() {
-
-    if (finished) {
-        return;
+    if (messageIndex >= messages.length) {
+        messageIndex = 0;
     }
 
+}, 5000);
+
+
+// ===============================
+// BOTÓN QUE SE MUEVE
+// ===============================
+function moveButton() {
+
+    const maxX =
+        window.innerWidth -
+        stopButton.offsetWidth -
+        20;
+
+    const maxY =
+        window.innerHeight -
+        stopButton.offsetHeight -
+        20;
+
+    const x =
+        Math.random() * Math.max(maxX, 20);
+
+    const y =
+        Math.random() * Math.max(maxY, 20);
+
+    stopButton.style.left = x + "px";
+    stopButton.style.top = y + "px";
+}
+
+stopButton.addEventListener("click", () => {
+
+    if (finished) return;
 
     attempts++;
 
+    attemptsDisplay.textContent = attempts;
 
-    attemptsElement.textContent =
-        attempts;
-
-
-    if (
-        attempts < 10
-    ) {
-
-        moveButton();
-
-
-        stopButton.textContent =
-            "TERMINATE SESSION [" +
-            (10 - attempts) +
-            "]";
-
-    }
-
-    else {
+    if (attempts < 10) {
 
         stopButton.textContent =
             "TERMINATE SESSION";
 
+        moveButton();
 
-        stopButton.style.left =
-            "50%";
+    } else {
 
+        stopButton.style.left = "50%";
+        stopButton.style.top = "auto";
+        stopButton.style.bottom = "30px";
+        stopButton.style.transform = "translateX(-50%)";
 
-        stopButton.style.top =
-            "auto";
+        stopButton.textContent =
+            "TERMINATE SESSION";
 
-
-        stopButton.style.bottom =
-            "38px";
-
-
-        stopButton.style.transform =
-            "translateX(-50%)";
-
-
-        stopButton.removeEventListener(
-            "click",
-            handleStop
-        );
-
-
-        stopButton.addEventListener(
-            "click",
-            finishSimulation,
-            {
-                once: true
-            }
-        );
-
+        stopButton.onclick = finishSimulation;
     }
-
-}
-
-
-/* =================================
-   MOVER BOTÓN
-================================= */
-
-function moveButton() {
-
-    const width =
-        stopButton.offsetWidth;
+});
 
 
-    const height =
-        stopButton.offsetHeight;
-
-
-    const maxX =
-        window.innerWidth -
-        width -
-        10;
-
-
-    const maxY =
-        window.innerHeight -
-        height -
-        10;
-
-
-    let x =
-        Math.random() *
-        Math.max(
-            10,
-            maxX
-        );
-
-
-    let y =
-        55 +
-        Math.random() *
-        Math.max(
-            20,
-            maxY - 55
-        );
-
-
-    stopButton.style.left =
-        x + "px";
-
-
-    stopButton.style.top =
-        y + "px";
-
-
-    stopButton.style.bottom =
-        "auto";
-
-
-    stopButton.style.transform =
-        "none";
-
-}
-
-
-/* =================================
-   PANTALLA FINAL
-================================= */
-
+// ===============================
+// PANTALLA FINAL
+// ===============================
 function finishSimulation() {
 
-    if (finished) {
-        return;
-    }
-
+    if (finished) return;
 
     finished = true;
 
+    finalMessage.classList.remove("hidden");
 
-    finalMessage.classList
-        .remove("hidden");
+    stopButton.style.display = "none";
 
+    const logs = finalMessage.querySelector(".final-logs");
 
-    stopButton.style.display =
-        "none";
+    if (logs) {
 
-
-    finalMessage.innerHTML = `
-
-        <div class="final-window">
-
-
-            <div class="final-header">
-
-                SYSTEM ALERT
-
-            </div>
-
-
-            <div class="final-content">
-
-
-                <div class="warning-symbol">
-
-                    !
-
-                </div>
-
-
-                <h2>
-
-                    HAS SIDO HACKEADO
-
-                </h2>
-
-
-                <div class="final-line">
-
-                    SYSTEM COMPROMISED
-
-                </div>
-
-
-                <div class="final-log">
-
-                    [OK] CONNECTION ESTABLISHED<br>
-
-                    [OK] SESSION CREATED<br>
-
-                    [OK] SECURITY BYPASS<br>
-
-                    [OK] ACCESS GRANTED<br>
-
-                    [OK] OPERATION COMPLETE
-
-                </div>
-
-
-                <p>
-
-                    UNAUTHORIZED ACCESS DETECTED
-
-                </p>
-
-
-            </div>
-
-        </div>
-
-    `;
-
+        logs.innerHTML = `
+            > REMOTE SESSION ESTABLISHED<br>
+            > SECURITY BYPASS: SUCCESS<br>
+            > SYSTEM ACCESS: GRANTED<br>
+            > LOCAL RESOURCES: DETECTED<br>
+            > SESSION STATUS: ACTIVE<br>
+            > SECURITY STATUS: COMPROMISED<br>
+            > CONNECTION: STABLE
+        `;
+    }
 }
 
 
-/* =================================
-   ACTIVACIÓN AUTOMÁTICA
-   A LOS 15 SEGUNDOS
-================================= */
-
+// ===============================
+// APARECER "HAS SIDO HACKEADO"
+// DESPUÉS DE 4 SEGUNDOS
+// ===============================
 setTimeout(() => {
 
     finishSimulation();
 
-}, 500);
+}, 4000);
+
