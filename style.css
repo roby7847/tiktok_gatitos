@@ -1,0 +1,866 @@
+* {
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+html,
+body {
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #050605;
+
+    color: #c8c8c8;
+
+    font-family:
+        "Courier New",
+        Consolas,
+        monospace;
+
+}
+
+
+body {
+
+    user-select: none;
+
+    touch-action: manipulation;
+
+}
+
+
+/* =================================
+   APLICACIÓN
+================================= */
+
+#app {
+
+    position: relative;
+
+    width: 100vw;
+
+    height: 100vh;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            #101411 0%,
+            #070907 45%,
+            #020202 100%
+        );
+
+}
+
+
+/* =================================
+   BARRA SUPERIOR
+================================= */
+
+.system-bar {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 42px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 0 14px;
+
+    background: #090a09;
+
+    border-bottom:
+        1px solid #303530;
+
+    color: #aeb6ae;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    z-index: 100;
+
+}
+
+
+/* =================================
+   PANEL DE SEGURIDAD
+================================= */
+
+.security-panel {
+
+    position: absolute;
+
+    top: 58px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: min(92%, 470px);
+
+    padding: 18px;
+
+    background:
+        rgba(8, 10, 8, .96);
+
+    border:
+        1px solid #384038;
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, .7);
+
+    z-index: 80;
+
+}
+
+
+.status-line {
+
+    color: #8fa48f;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.status-dot {
+
+    display: inline-block;
+
+    width: 7px;
+
+    height: 7px;
+
+    margin-right: 6px;
+
+    background: #779477;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 7px #779477;
+
+}
+
+
+.security-panel h1 {
+
+    color: #d4d8d4;
+
+    font-size: 18px;
+
+    font-weight: normal;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.scan-info {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    color: #7e887e;
+
+    font-size: 10px;
+
+}
+
+
+.scan-info span {
+
+    color: #b5c1b5;
+
+}
+
+
+.progress-container {
+
+    width: 100%;
+
+    height: 5px;
+
+    margin-top: 15px;
+
+    background: #191d19;
+
+    border:
+        1px solid #303630;
+
+}
+
+
+#progressBar {
+
+    width: 0%;
+
+    height: 100%;
+
+    background: #879987;
+
+    transition:
+        width .15s linear;
+
+}
+
+
+.percentage {
+
+    margin-top: 7px;
+
+    text-align: right;
+
+    color: #737b73;
+
+    font-size: 10px;
+
+}
+
+
+/* =================================
+   TERMINALES
+================================= */
+
+.terminal {
+
+    position: absolute;
+
+    width: 265px;
+
+    height: 155px;
+
+    background:
+        rgba(3, 5, 3, .97);
+
+    border:
+        1px solid #454c45;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, .8);
+
+    z-index: 30;
+
+    overflow: hidden;
+
+    animation:
+        terminalOpen .18s ease-out;
+
+}
+
+
+.terminal-header {
+
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 8px;
+
+    background: #111411;
+
+    border-bottom:
+        1px solid #303530;
+
+    color: #7e897e;
+
+    font-size: 9px;
+
+}
+
+
+.terminal-content {
+
+    padding: 7px;
+
+    height: 130px;
+
+    overflow: hidden;
+
+    color: #879987;
+
+    font-size: 9px;
+
+    line-height: 1.55;
+
+}
+
+
+.terminal-content .danger {
+
+    color: #a86d6d;
+
+}
+
+
+@keyframes terminalOpen {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+/* =================================
+   BINARIOS
+================================= */
+
+.binary {
+
+    position: absolute;
+
+    color: #6d806d;
+
+    opacity: .13;
+
+    font-size: 9px;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+
+    z-index: 2;
+
+    animation:
+        binaryMove 5s linear forwards;
+
+}
+
+
+@keyframes binaryMove {
+
+    from {
+
+        transform:
+            translateY(50px);
+
+        opacity: 0;
+
+    }
+
+    20% {
+
+        opacity: .15;
+
+    }
+
+    to {
+
+        transform:
+            translateY(-150px);
+
+        opacity: 0;
+
+    }
+
+}
+
+
+/* =================================
+   ALERTAS
+================================= */
+
+.alert {
+
+    position: absolute;
+
+    width: 245px;
+
+    background: #0a0b0a;
+
+    border:
+        1px solid #6b4646;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, .85);
+
+    z-index: 70;
+
+    animation:
+        alertOpen .15s ease-out;
+
+}
+
+
+.alert-header {
+
+    padding: 6px 8px;
+
+    background: #171211;
+
+    border-bottom:
+        1px solid #493838;
+
+    color: #9e7777;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+}
+
+
+.alert-body {
+
+    padding: 12px;
+
+    color: #b7b7b7;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+}
+
+
+.alert-body strong {
+
+    color: #bd7b7b;
+
+    font-weight: normal;
+
+}
+
+
+.alert-button {
+
+    margin-top: 8px;
+
+    padding: 5px 12px;
+
+    background: #161817;
+
+    color: #aaa;
+
+    border:
+        1px solid #484c48;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+}
+
+
+@keyframes alertOpen {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(-5px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =================================
+   MENSAJE CENTRAL
+================================= */
+
+#intrusionMessage {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 48%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 95%;
+
+    color: #a16b6b;
+
+    font-size:
+        clamp(17px, 5vw, 30px);
+
+    letter-spacing: 3px;
+
+    text-align: center;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 90;
+
+    text-shadow:
+        0 0 12px rgba(150, 70, 70, .4);
+
+}
+
+
+/* =================================
+   CONTADOR
+================================= */
+
+.attempt-counter {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 95px;
+
+    transform:
+        translateX(-50%);
+
+    text-align: center;
+
+    color: #646a64;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    z-index: 150;
+
+}
+
+
+.attempt-counter strong {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #a47777;
+
+    font-size: 17px;
+
+}
+
+
+/* =================================
+   BOTÓN
+================================= */
+
+#stopButton {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 38px;
+
+    transform:
+        translateX(-50%);
+
+    min-width: 220px;
+
+    padding: 12px 20px;
+
+    background: #101210;
+
+    color: #a8aaa8;
+
+    border:
+        1px solid #555b55;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, .7);
+
+    z-index: 200;
+
+    cursor: pointer;
+
+}
+
+
+#stopButton:active {
+
+    background: #1b1e1b;
+
+}
+
+
+/* =================================
+   PANTALLA FINAL
+================================= */
+
+#finalMessage {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(0, 0, 0, .97);
+
+    z-index: 1000;
+
+}
+
+
+.final-window {
+
+    width: min(90%, 420px);
+
+    background: #090a09;
+
+    border:
+        1px solid #6b4444;
+
+    box-shadow:
+        0 0 70px rgba(100, 40, 40, .3);
+
+}
+
+
+.final-header {
+
+    padding: 8px 12px;
+
+    background: #151010;
+
+    border-bottom:
+        1px solid #493535;
+
+    color: #927575;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+}
+
+
+.final-content {
+
+    padding: 30px 20px;
+
+    text-align: center;
+
+}
+
+
+.warning-symbol {
+
+    width: 42px;
+
+    height: 42px;
+
+    margin:
+        0 auto 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid #986464;
+
+    color: #a86d6d;
+
+    font-size: 25px;
+
+}
+
+
+.final-content h2 {
+
+    color: #b87b7b;
+
+    font-size: 24px;
+
+    font-weight: normal;
+
+    letter-spacing: 2px;
+
+}
+
+
+.final-line {
+
+    margin-top: 10px;
+
+    color: #806060;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+}
+
+
+.final-log {
+
+    margin-top: 20px;
+
+    padding: 12px;
+
+    text-align: left;
+
+    background: #050605;
+
+    border:
+        1px solid #242824;
+
+    color: #798479;
+
+    font-size: 9px;
+
+    line-height: 1.8;
+
+}
+
+
+.final-content p {
+
+    margin-top: 18px;
+
+    color: #777;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 12px;
+
+}
+
+
+/* =================================
+   OCULTO
+================================= */
+
+.hidden {
+
+    display: none !important;
+
+}
+
+
+/* =================================
+   CELULARES
+================================= */
+
+@media (max-width: 600px) {
+
+    .security-panel {
+
+        width: 94%;
+
+        padding: 14px;
+
+    }
+
+
+    .terminal {
+
+        width: 215px;
+
+        height: 135px;
+
+    }
+
+
+    .terminal-content {
+
+        height: 110px;
+
+        font-size: 8px;
+
+    }
+
+
+    .alert {
+
+        width: 195px;
+
+    }
+
+
+    .alert-body {
+
+        font-size: 10px;
+
+    }
+
+
+    .system-bar {
+
+        font-size: 9px;
+
+    }
+
+}

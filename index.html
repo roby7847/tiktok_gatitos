@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>System Security</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+<div id="app">
+
+    <!-- BARRA SUPERIOR -->
+
+    <header class="system-bar">
+
+        <div>
+            SYSTEM SECURITY MONITOR
+        </div>
+
+        <div id="clock">
+            00:00:00
+        </div>
+
+    </header>
+
+
+    <!-- PANEL PRINCIPAL -->
+
+    <section class="security-panel">
+
+        <div class="status-line">
+
+            <span class="status-dot"></span>
+
+            CONNECTION ACTIVE
+
+        </div>
+
+
+        <h1>
+            SYSTEM ANALYSIS
+        </h1>
+
+
+        <div class="scan-info">
+
+            <div>
+
+                PROCESS:
+
+                <span id="processText">
+                    INITIALIZING
+                </span>
+
+            </div>
+
+
+            <div>
+
+                STATUS:
+
+                <span id="statusText">
+                    RUNNING
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="progress-container">
+
+            <div id="progressBar"></div>
+
+        </div>
+
+
+        <div class="percentage">
+
+            <span id="percentage">
+                0
+            </span>%
+
+        </div>
+
+    </section>
+
+
+    <!-- TERMINALES -->
+
+    <div id="terminalLayer"></div>
+
+
+    <!-- BINARIOS -->
+
+    <div id="binaryLayer"></div>
+
+
+    <!-- ALERTAS -->
+
+    <div id="alertLayer"></div>
+
+
+    <!-- MENSAJE CENTRAL -->
+
+    <div id="intrusionMessage">
+        SYSTEM ACCESS DETECTED
+    </div>
+
+
+    <!-- CONTADOR -->
+
+    <div class="attempt-counter">
+
+        <span>
+            TERMINATION ATTEMPTS
+        </span>
+
+        <strong>
+
+            <span id="attempts">
+                0
+            </span>/10
+
+        </strong>
+
+    </div>
+
+
+    <!-- BOTÓN -->
+
+    <button id="stopButton">
+
+        TERMINATE SESSION
+
+    </button>
+
+
+    <!-- PANTALLA FINAL -->
+
+    <div id="finalMessage" class="hidden">
+
+        <div class="final-window">
+
+
+            <div class="final-header">
+
+                SYSTEM ALERT
+
+            </div>
+
+
+            <div class="final-content">
+
+
+                <div class="warning-symbol">
+
+                    !
+
+                </div>
+
+
+                <h2>
+
+                    HAS SIDO HACKEADO
+
+                </h2>
+
+
+                <div class="final-line">
+
+                    SYSTEM COMPROMISED
+
+                </div>
+
+
+                <div class="final-log">
+
+                    [OK] CONNECTION ESTABLISHED<br>
+
+                    [OK] SESSION CREATED<br>
+
+                    [OK] SECURITY BYPASS<br>
+
+                    [OK] ACCESS GRANTED<br>
+
+                    [OK] OPERATION COMPLETE
+
+                </div>
+
+
+                <p>
+
+                    UNAUTHORIZED ACCESS DETECTED
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
